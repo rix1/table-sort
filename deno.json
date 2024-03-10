@@ -1,6 +1,6 @@
 {
   "name": "@rix1/table-sort",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "exports": "./mod.ts",
   "compilerOptions": {
     "lib": ["esnext", "dom", "dom.iterable"]

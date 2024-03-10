@@ -9,18 +9,6 @@ Effortlessly add sorting capabilities to your HTML tables with `@rix1/table-sort
 - Automatic sorting indicator icons for visual cues.
 - Minimal setup required.
 
-## Installation
-
-```bash
-npm install @rix1/table-sort
-```
-
-Or, if you use Yarn:
-
-```bash
-yarn add @rix1/table-sort
-```
-
 ## Quick Start
 
 1. **Include the library in your project:**

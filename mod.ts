@@ -1,49 +1,4 @@
 /**
- * # Quick Start Guide for Table Sorting
- * Here's a minimal usage example for the table sorting functionality:
- *
- * ## Enable Sorting on a Table:
- * Add `data-sort-table` to your `<table>` element to make it sortable.
- *
- * ## HTML Setup:
- * ```html
- * <table data-sort-table>
- *   <thead>
- *     <tr>
- *       <th data-sort-header="price">Price</th>
- *       <th data-sort-header="name">Name</th>
- *     </tr>
- *   </thead>
- *   <tbody>
- *     <tr>
- *       <td data-sort-label="price" data-sort-value="100">100</td>
- *       <td data-sort-label="name" data-sort-value="Solan">Solan</td>
- *     </tr>
- *     <tr>
- *       <td data-sort-label="price" data-sort-value="200">200</td>
- *       <td data-sort-label="name" data-sort-value="James">James</td>
- *     </tr>
- *   </tbody>
- * </table>
- * ```
- *
- * ## Initialize Sorting:
- * ```javascript
- * document.addEventListener('DOMContentLoaded', () => {
- *   initTableSortable();
- * });
- * ```
- *
- * This setup enables your table headers to sort the corresponding columns in
- * ascending or descending order when clicked. Sorting indicators (`↓`, `↑`) are
- * automatically added next to the sorted column's header to indicate the sort
- * direction.
- *
- * Ensure your `<td>` elements have matching `data-sort-label` attributes and
- * `data-sort-value` attributes for the sorting to work correctly.
- */
-
-/**
  * Interface for Table Sort Data
  */
 interface SortData {
@@ -52,7 +7,50 @@ interface SortData {
 }
 
 /**
- * Initializes table sorting functionality
+ * ## Quick Start Guide for Table Sorting
+ * This setup enables your table headers to sort the corresponding columns in
+ * ascending or descending order when clicked. Sorting indicators (`↓`, `↑`) are
+ * automatically added next to the sorted column's header to indicate the sort
+ * direction. State is stored in the DOM itself and it works with multiple tables
+ * on the same page.
+ *
+ * Ensure your `<td>` elements have matching `data-sort-label` attributes and
+ * `data-sort-value` attributes for the sorting to work correctly.
+ *
+ * ### Minimal Example
+ *
+ * #### Step 1: Add data- attributes to your HTML
+ *
+ * Add `data-sort-table` to your top table element like so: `<table data-sort-table>`.
+ * For your `th` and `td` elements, here's the attributes you need to set
+ *
+ * <table data-sort-table>
+ *   <thead>
+ *     <tr>
+ *       <th data-sort-header="price"><pre>data-sort-header="price"</pre></th>
+ *       <th data-sort-header="name"><pre>data-sort-header="name"</pre></th>
+ *     </tr>
+ *   </thead>
+ *   <tbody>
+ *     <tr>
+ *       <td data-sort-label="price" data-sort-value="100"><pre>data-sort-label="price" data-sort-value="100"</pre></td>
+ *       <td data-sort-label="name" data-sort-value="Solan"><pre>data-sort-label="name" data-sort-value="Solan"</pre></td>
+ *     </tr>
+ *     <tr>
+ *       <td data-sort-label="price" data-sort-value="200"><pre>data-sort-label="price" data-sort-value="200"</pre></td>
+ *       <td data-sort-label="name" data-sort-value="James"><pre>data-sort-label="name" data-sort-value="James"</pre></td>
+ *     </tr>
+ *   </tbody>
+ * </table>
+ *
+ * #### Step 2: Initialize Sorting
+ * Somewhere on your page (or in a existing bundle), add the following script:
+ * ```javascript
+ * document.addEventListener('DOMContentLoaded', () => {
+ *   initTableSortable();
+ * });
+ * ```
+ * @returns This will not return anything. It just attaches event listeners to all table headers with `data-sort-header` attribute.
  */
 export function initTableSortable() {
   document.addEventListener("click", (e: MouseEvent) => {
@@ -84,11 +82,11 @@ function sortTableHeaderClick(target: HTMLElement) {
 function sortRows(
   rows: HTMLTableRowElement[],
   sortLabel: string,
-  order: string
+  order: string,
 ): HTMLTableRowElement[] {
   function getValueFromRow(
     row: HTMLTableRowElement,
-    sortLabel: string
+    sortLabel: string,
   ): SortData["value"] {
     const cell = row.querySelector(`[data-sort-label="${sortLabel}"]`);
     if (!cell) {
@@ -136,16 +134,15 @@ function sortRows(
 function updateSortIndicators(
   table: HTMLElement,
   sortLabel: string,
-  sortOrder: string
+  sortOrder: string,
 ) {
   const headers = table.querySelectorAll(
-    "[data-sort-header]"
+    "[data-sort-header]",
   ) as NodeListOf<HTMLElement>;
   headers.forEach((header) => {
     const icon = sortOrder === "asc" ? " ↓" : " ↑";
     const label = header.getAttribute("data-sort-header");
-    header.innerText =
-      header.innerText.replace(/(↓|↑)$/, "") +
+    header.innerText = header.innerText.replace(/(↓|↑)$/, "") +
       (label === sortLabel ? icon : "");
   });
 }
@@ -170,7 +167,7 @@ function sortTableBy(table: HTMLElement, sortLabel: string) {
 
   const tbody = table.querySelector("tbody")!;
   const rows = Array.from(
-    tbody.querySelectorAll("tr:not(.panel-hidden)")
+    tbody.querySelectorAll("tr:not(.panel-hidden)"),
   ) as HTMLTableRowElement[];
   const sortedRows = sortRows(rows, sortLabel, newSortOrder);
 

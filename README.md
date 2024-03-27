@@ -66,7 +66,3 @@ Contributions are welcome! Please feel free to submit a pull request or create a
 ## License
 
 This project is licensed under the MIT License - see the LICENSE file for details.
-
----
-
-This README provides a clear and comprehensive guide for potential users of your library, from setup to implementation. Adjustments can be made based on your specific requirements or additional features you might add in the future.
